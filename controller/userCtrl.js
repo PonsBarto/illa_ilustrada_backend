@@ -14,6 +14,8 @@ const createUser = asyncHandler(async (req, res) => {
   }
 });
 
+
+//login a user
 const loginUserCtrl = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   //check if user exists or not
@@ -32,4 +34,15 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createUser, loginUserCtrl };
+//Get all users
+
+const getallUser= asyncHandler(async(req,res)=>{
+  try{
+    const getUser= await User.find();
+    res.json(getUser);
+  }catch(error){
+    throw new Error(error);
+  }
+});
+
+module.exports = { createUser, loginUserCtrl, getallUser };
