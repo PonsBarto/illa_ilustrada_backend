@@ -14,16 +14,15 @@ const createUser = asyncHandler(async (req, res) => {
   }
 });
 
-
 //login a user
 const loginUserCtrl = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   //check if user exists or not
   const findUser = await User.findOne({ email });
-  if (findUser && await findUser.isPasswordMatched(password)) {
+  if (findUser && (await findUser.isPasswordMatched(password))) {
     res.json({
       _id: findUser?._id,
-      fistname:findUser?.firstname,
+      fistname: findUser?.firstname,
       lastname: findUser?.lastname,
       email: findUser?.email,
       mobile: findUser?.mobile,
@@ -36,13 +35,27 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
 
 //Get all users
 
-const getallUser= asyncHandler(async(req,res)=>{
-  try{
-    const getUser= await User.find();
+const getallUser = asyncHandler(async (req, res) => {
+  try {
+    const getUser = await User.find();
     res.json(getUser);
-  }catch(error){
+  } catch (error) {
     throw new Error(error);
   }
 });
 
-module.exports = { createUser, loginUserCtrl, getallUser };
+//Get a singel user
+
+const getaUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try{
+    const getaUser = await User.findById(id);
+    res.json({
+      getaUser,
+    })
+  }catch (error) {
+    throw new  Error(error)
+  }
+});
+
+module.exports = { createUser, loginUserCtrl, getallUser, getaUser };
