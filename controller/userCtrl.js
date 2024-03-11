@@ -1,6 +1,7 @@
 const { generateToken } = require("../config/jwtToken");
 const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
+const validateMongoDbId = require("../utils/validateMongodbId");
 
 //Create a User
 const createUser = asyncHandler(async (req, res) => {
@@ -39,6 +40,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
 
 const updatedUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
+  validateMongoDbId(_id);
   try {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
@@ -73,6 +75,8 @@ const getallUser = asyncHandler(async (req, res) => {
 
 const getaUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongoDbId(id);
+
   try {
     const getaUser = await User.findById(id);
     res.json({
@@ -87,6 +91,7 @@ const getaUser = asyncHandler(async (req, res) => {
 
 const deleteaUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongoDbId(id);
   try {
     const deleteaUser = await User.findByIdAndDelete(id);
     res.json({
@@ -99,8 +104,10 @@ const deleteaUser = asyncHandler(async (req, res) => {
 
 const blockUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongoDbId(id);
+
   try {
-    const block = User.findByIdAndUpdate(
+    const blockusr = await User.findByIdAndUpdate(
       id,
       {
         isBlocked: true,
@@ -109,27 +116,28 @@ const blockUser = asyncHandler(async (req, res) => {
         new: true,
       }
     );
-    res.json({
-      message:"User Blocked",
-    });
+    res.json(blockusr);
   } catch (error) {
     throw new Error(error);
   }
 });
+
 const unblockUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongoDbId(id);
+
   try {
-    const unblock = User.findByIdAndUpdate(
+    const unblock = await User.findByIdAndUpdate(
       id,
       {
-        isBlocked: folse,
+        isBlocked: false,
       },
       {
         new: true,
       }
     );
     res.json({
-      message:"User UnBlocked",
+      message: "User UnBlocked",
     });
   } catch (error) {
     throw new Error(error);
