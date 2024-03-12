@@ -24,11 +24,11 @@ var productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      //required: true,
+      required: true,
     },
     place: {
       type: String,
-      //required: true,
+      required: true,
     },
     quantity: {
       type: Number,
