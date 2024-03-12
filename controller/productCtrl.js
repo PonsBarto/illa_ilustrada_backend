@@ -2,7 +2,6 @@ const { default: slugify } = require("slugify");
 const Product = require("../models/productModel");
 const asyncHandler = require("express-async-handler");
 
-
 const createProduct = asyncHandler(async (req, res) => {
   try {
     if (req.body.title) {
@@ -30,6 +29,16 @@ const updatePoduct = asyncHandler(async (req, res) => {
   }
 });
 
+const delatePoduct = asyncHandler(async (req, res) => {
+  const id = req.params;
+  try {
+    const delatePoduct = await Product.findOneAndDelete(id);
+    res.json(delatePoduct);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 const getaProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
@@ -49,4 +58,10 @@ const getAllProduct = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createProduct, getaProduct, getAllProduct, updatePoduct };
+module.exports = {
+  createProduct,
+  getaProduct,
+  getAllProduct,
+  updatePoduct,
+  delatePoduct,
+};
