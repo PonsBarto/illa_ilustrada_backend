@@ -1,7 +1,7 @@
 const mongoose = require("mongoose"); // Erase if already required
 
 // Declare the Schema of the Mongo model
-var userSchema = new mongoose.Schema(
+var productSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -23,29 +23,34 @@ var userSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
+      required: true,
     },
     place: {
       type: String,
-      enum: ["Playa", "Pueblo", "Ciutadella"],
+      required: true,
     },
-    quantity: Number,
+    quantity: {
+      type: Number,
+      require: true,
+    },
     sold: {
       type: Number,
       default: 0,
     },
-    Image: {
-      type: Array,
-    },
-    color: {
-      type: String,
-      enum: ["Black", "Brown", "Blue", "Withe"],
-    },
+    image: [
+      {
+        public_id: String,
+        url: String,
+      },
+    ],
+    color: [],
+    tags: String,
     ratings: [
       {
-        start: Number,
-        postedby: { types: mongoose.Schema.Types.ObjectId, ref: "User" },
+        star: Number,
+        comment: String,
+        postedby: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       },
     ],
   },
