@@ -78,6 +78,19 @@ const getAllProduct = asyncHandler(async (req, res) => {
     } else {
       query = query.select("-__v");
     }
+
+    //pagination
+
+    const page = req.query.page;
+    const limit = req.query.limit;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(limit);
+    if(req.query.page){
+      const procusctCount= await Product.countDocuments();
+      if(skip>=procusctCount) throw new Error("This Page dose not exists");
+    }
+    console.log(page, limit, skip);
+
     const product = await query;
     res.json(product);
   } catch (error) {
