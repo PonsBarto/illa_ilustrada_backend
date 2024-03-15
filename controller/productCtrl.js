@@ -1,6 +1,7 @@
 const { default: slugify } = require("slugify");
 const Product = require("../models/productModel");
 const asyncHandler = require("express-async-handler");
+const validateMongoDbId = ("../utils/validateMongodbId");
 
 const createProduct = asyncHandler(async (req, res) => {
   try {
@@ -16,6 +17,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const updatePoduct = asyncHandler(async (req, res) => {
   const id = req.params;
+  validateMongoDbId(id);
   try {
     if (req.body.title) {
       req.body.slug = slugify(req.body.title);
@@ -31,6 +33,7 @@ const updatePoduct = asyncHandler(async (req, res) => {
 
 const delatePoduct = asyncHandler(async (req, res) => {
   const id = req.params;
+  validateMongoDbId(id);
   try {
     const delatePoduct = await Product.findOneAndDelete(id);
     res.json(delatePoduct);
@@ -41,6 +44,7 @@ const delatePoduct = asyncHandler(async (req, res) => {
 
 const getaProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongoDbId(id);
   try {
     const findProduct = await Product.findById(id);
     res.json(findProduct);
