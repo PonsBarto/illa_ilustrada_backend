@@ -1,15 +1,16 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const dbConnect = require("./config/dbConnect");
-const {notFound, errorHandler} = require('./middlewares/errorHandler');
+const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const app = express();
 const dotnev = require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 const authRouter = require("./routes/authRoute");
-const  productRouter = require ("./routes/productRoute");
-const  blogRouter = require ("./routes/blogRoute");
-const categoryRouter = require ("./routes/prodctcategoryRoute");
-const blogcategoryRouter = require ("./routes/blogCatRoute")
+const productRouter = require("./routes/productRoute");
+const blogRouter = require("./routes/blogRoute");
+const categoryRouter = require("./routes/prodctcategoryRoute");
+const blogcategoryRouter = require("./routes/blogCatRoute");
+const placeRouter = require("./routes/placeRoute");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const blogModel = require("./models/blogModel");
@@ -17,7 +18,7 @@ dbConnect();
 
 app.use(morgan("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/api/user", authRouter);
@@ -25,8 +26,7 @@ app.use("/api/product", productRouter);
 app.use("/api/blog", blogRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/blogcategory", blogcategoryRouter);
-
-
+app.use("/api/place", placeRouter);
 
 app.use(notFound);
 app.use(errorHandler);
