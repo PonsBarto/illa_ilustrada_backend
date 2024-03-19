@@ -1,4 +1,4 @@
-const Category = require("../models/prodcategoryModel");
+const Category = require("../models/prodcategoryModel.js");
 const asyncHandler = require("express-async-handler");
 const validateMongoDbId = require("../utils/validateMongodbId");
 
@@ -10,31 +10,28 @@ const createCategory = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
-
 const updateCategory = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
   try {
-    const updateCategory = await Category.findByIdAndUpdate(id, req.body, {
+    const updatedCategory = await Category.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res.json(updateCategory);
+    res.json(updatedCategory);
   } catch (error) {
     throw new Error(error);
   }
 });
-
 const deleteCategory = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
   try {
-    const deleteCategory = await Category.findByIdAndDelete(id);
-    res.json(deleteCategory);
+    const deletedCategory = await Category.findByIdAndDelete(id);
+    res.json(deletedCategory);
   } catch (error) {
     throw new Error(error);
   }
 });
-
 const getCategory = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -45,7 +42,6 @@ const getCategory = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
-
 const getallCategory = asyncHandler(async (req, res) => {
   try {
     const getallCategory = await Category.find();
@@ -54,8 +50,6 @@ const getallCategory = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
-
-
 module.exports = {
   createCategory,
   updateCategory,
