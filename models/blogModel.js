@@ -30,15 +30,11 @@ var blogSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  image: {
-    type: String,
-    default:
-      "https://www.dreamstime.com/blogging-blog-concepts-ideas-worktable-blogging-blog-concepts-ideas-white-worktable-image110423482",
-  },
   author:{
     type: String,
     default: "Admin"
   },
+  image:[],
 },{
    toJSON:{
     virtuals:true,
