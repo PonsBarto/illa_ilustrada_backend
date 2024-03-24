@@ -26,19 +26,24 @@ var productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    place: {
+    brand: {
       type: String,
       required: true,
     },
     quantity: {
       type: Number,
-      require: true,  
+      required: true,
     },
     sold: {
       type: Number,
       default: 0,
     },
-    image: [],
+    images: [
+      {
+        public_id: String,
+        url: String,
+      },
+    ],
     color: [],
     tags: String,
     ratings: [
@@ -48,7 +53,7 @@ var productSchema = new mongoose.Schema(
         postedby: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       },
     ],
-    totalreating: {
+    totalrating: {
       type: String,
       default: 0,
     },

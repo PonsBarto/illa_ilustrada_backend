@@ -14,6 +14,7 @@ const placeRouter = require("./routes/placeRoute");
 const couponRouter = require("./routes/couponRoute");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const cors = require("cors");
 
 dbConnect();
 

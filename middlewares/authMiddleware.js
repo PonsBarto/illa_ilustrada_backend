@@ -17,14 +17,14 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
       throw new Error("Not Authorized token expired, Please Login again");
     }
   } else {
-    throw new Error("There is no token attached to header");
+    throw new Error(" There is no token attached to header");
   }
 });
 const isAdmin = asyncHandler(async (req, res, next) => {
   const { email } = req.user;
   const adminUser = await User.findOne({ email });
   if (adminUser.role !== "admin") {
-    throw new Error("Ypur are not a admin");
+    throw new Error("You are not an admin");
   } else {
     next();
   }
